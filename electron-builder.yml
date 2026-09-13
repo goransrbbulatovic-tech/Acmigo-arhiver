@@ -18,6 +18,7 @@ asarUnpack:
 mac:
   category: public.app-category.utilities
   target: dmg
-  hardenedRuntime: true
+  identity: null
+  hardenedRuntime: false
   gatekeeperAssess: false
   notarize: false
