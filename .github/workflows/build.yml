@@ -11,10 +11,10 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - runner: macos-14
+          - runner: macos-14      # Apple Silicon
             arch: arm64
             triplet: arm64-osx-static
-          - runner: macos-13
+          - runner: macos-13      # Intel
             arch: x64
             triplet: x64-osx-static
 
@@ -66,23 +66,8 @@ jobs:
           file native/build/Release/archive_addon.node
           otool -L native/build/Release/archive_addon.node || true
 
-      - name: Priprema notarizacionog ključa
-        if: env.APPLE_API_KEY_BASE64 != ''
-        env:
-          APPLE_API_KEY_BASE64: ${{ secrets.APPLE_API_KEY_BASE64 }}
-        run: |
-          echo "$APPLE_API_KEY_BASE64" | base64 --decode > "$RUNNER_TEMP/AuthKey.p8"
-          echo "APPLE_API_KEY=$RUNNER_TEMP/AuthKey.p8" >> "$GITHUB_ENV"
-
       - name: Build & pakovanje (DMG)
-        env:
-          DEBUG: electron-builder
-          CSC_LINK: ${{ secrets.MAC_CSC_LINK }}
-          CSC_KEY_PASSWORD: ${{ secrets.MAC_CSC_KEY_PASSWORD }}
-          APPLE_API_KEY_ID: ${{ secrets.APPLE_API_KEY_ID }}
-          APPLE_API_ISSUER: ${{ secrets.APPLE_API_ISSUER }}
-        run: |
-          npx electron-builder --mac --${{ matrix.arch }} --publish never
+        run: npx electron-builder --mac --${{ matrix.arch }} --publish never
 
       - name: Upload DMG
         uses: actions/upload-artifact@v4
