@@ -25,37 +25,3 @@ mac:
   entitlements: build/entitlements.mac.plist
   entitlementsInherit: build/entitlements.mac.plist
   notarize: false
-
-fileAssociations:
-  - ext: zip
-    name: ZIP arhiva
-    role: Editor
-  - ext: 7z
-    name: 7-Zip arhiva
-    role: Editor
-  - ext: tar
-    name: TAR arhiva
-    role: Editor
-  - ext: gz
-    name: GZip arhiva
-    role: Viewer
-  - ext: tgz
-    role: Viewer
-  - ext: bz2
-    role: Viewer
-  - ext: xz
-    role: Viewer
-  - ext: rar
-    name: RAR arhiva
-    role: Viewer
-  - ext: iso
-    name: ISO slika
-    role: Viewer
-  - ext: cab
-    role: Viewer
-  - ext: lha
-    role: Viewer
-  - ext: cpio
-    role: Viewer
-  - ext: xar
-    role: Viewer
