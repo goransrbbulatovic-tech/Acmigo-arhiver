@@ -1,0 +1,76 @@
+appId: com.acmigo.arhiver
+productName: AcMigo Arhiver
+copyright: © Milan
+
+directories:
+  output: dist
+  buildResources: build
+
+files:
+  - src/**/*
+  - native/build/Release/*.node
+  - package.json
+  - "!**/*.md"
+
+asar: true
+asarUnpack:
+  - native/build/Release/*.node
+
+mac:
+  category: public.app-category.utilities
+  target:
+    - dmg
+  hardenedRuntime: true
+  gatekeeperAssess: false
+  entitlements: build/entitlements.mac.plist
+  entitlementsInherit: build/entitlements.mac.plist
+  # Notarizacija je iskључena po defaultu da build UVIJEK prođe i bez Apple naloga.
+  # Kad dobiješ Apple Developer nalog, promijeni u:  notarize: true  (vidi README)
+  notarize: false
+
+dmg:
+  title: AcMigo Arhiver
+  contents:
+    - x: 130
+      y: 220
+      type: file
+    - x: 410
+      y: 220
+      type: link
+      path: /Applications
+
+# Registruje AcMigo kao PONUĐENI otvarač za ove formate ("Otvori pomoću…"),
+# NE mijenja tvoj default arhiver.
+fileAssociations:
+  - ext: zip
+    name: ZIP arhiva
+    role: Editor
+  - ext: 7z
+    name: 7-Zip arhiva
+    role: Editor
+  - ext: tar
+    name: TAR arhiva
+    role: Editor
+  - ext: gz
+    name: GZip arhiva
+    role: Viewer
+  - ext: tgz
+    role: Viewer
+  - ext: bz2
+    role: Viewer
+  - ext: xz
+    role: Viewer
+  - ext: rar
+    name: RAR arhiva
+    role: Viewer
+  - ext: iso
+    name: ISO slika
+    role: Viewer
+  - ext: cab
+    role: Viewer
+  - ext: lha
+    role: Viewer
+  - ext: cpio
+    role: Viewer
+  - ext: xar
+    role: Viewer
