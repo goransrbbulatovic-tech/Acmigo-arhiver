@@ -24,23 +24,8 @@ mac:
   gatekeeperAssess: false
   entitlements: build/entitlements.mac.plist
   entitlementsInherit: build/entitlements.mac.plist
-  # Notarizacija je iskључena po defaultu da build UVIJEK prođe i bez Apple naloga.
-  # Kad dobiješ Apple Developer nalog, promijeni u:  notarize: true  (vidi README)
   notarize: false
 
-dmg:
-  title: AcMigo Arhiver
-  contents:
-    - x: 130
-      y: 220
-      type: file
-    - x: 410
-      y: 220
-      type: link
-      path: /Applications
-
-# Registruje AcMigo kao PONUĐENI otvarač za ove formate ("Otvori pomoću…"),
-# NE mijenja tvoj default arhiver.
 fileAssociations:
   - ext: zip
     name: ZIP arhiva
