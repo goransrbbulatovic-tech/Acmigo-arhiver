@@ -4,24 +4,20 @@ copyright: © Milan
 
 directories:
   output: dist
-  buildResources: build
 
 files:
-  - src/**/*
-  - native/build/Release/*.node
-  - package.json
+  - "src/**/*"
+  - "native/build/Release/**"
+  - "package.json"
   - "!**/*.md"
 
 asar: true
 asarUnpack:
-  - native/build/Release/*.node
+  - "**/*.node"
 
 mac:
   category: public.app-category.utilities
-  target:
-    - dmg
+  target: dmg
   hardenedRuntime: true
   gatekeeperAssess: false
-  entitlements: build/entitlements.mac.plist
-  entitlementsInherit: build/entitlements.mac.plist
   notarize: false
