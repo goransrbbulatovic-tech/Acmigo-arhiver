@@ -1,0 +1,22 @@
+{
+  "name": "acmigo-arhiver",
+  "version": "1.0.0",
+  "description": "AcMigo Arhiver — brz i stabilan arhiver za macOS (zip, 7z, tar, iso, rar...).",
+  "main": "src/main/main.js",
+  "author": "Milan",
+  "license": "MIT",
+  "scripts": {
+    "build:native": "cmake-js compile --runtime electron --runtime-version=$(node -p \"require('electron/package.json').version\")",
+    "build:native:debug": "cmake-js compile --debug --runtime electron --runtime-version=$(node -p \"require('electron/package.json').version\")",
+    "start": "npm run build:native && electron .",
+    "dist": "npm run build:native && electron-builder --mac"
+  },
+  "dependencies": {
+    "node-addon-api": "^8.1.0"
+  },
+  "devDependencies": {
+    "cmake-js": "^7.3.0",
+    "electron": "40.0.0",
+    "electron-builder": "^24.13.3"
+  }
+}

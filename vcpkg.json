@@ -1,0 +1,7 @@
+{
+  "name": "acmigo-arhiver",
+  "version-string": "1.0.0",
+  "dependencies": [
+    { "name": "libarchive", "features": ["bzip2", "lz4", "lzma", "zstd"] }
+  ]
+}

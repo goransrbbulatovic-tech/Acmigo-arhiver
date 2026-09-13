@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self';" />
+  <title>AcMigo Arhiver</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="drop-hint">Pusti ovdje da otvoriš arhivu ili dodaš fajlove</div>
+
+  <header class="toolbar">
+    <div class="brand">AcMigo<span>Arhiver</span></div>
+    <div class="tb-group">
+      <button id="btn-open" title="Otvori arhivu">Otvori</button>
+      <button id="btn-new" title="Napravi novu arhivu">Nova arhiva</button>
+    </div>
+    <div class="tb-sep"></div>
+    <div class="tb-group">
+      <button id="btn-extract-all" disabled>Raspakuj sve…</button>
+      <button id="btn-extract-here" disabled>Raspakuj ovdje</button>
+      <button id="btn-extract-sel" disabled>Raspakuj izabrano…</button>
+    </div>
+    <div class="tb-sep"></div>
+    <div class="tb-group">
+      <button id="btn-add" disabled title="Dodaj fajlove u otvoreni zip">Dodaj</button>
+      <button id="btn-del" disabled title="Označi izabrano za brisanje">Obriši</button>
+      <button id="btn-save" disabled title="Sačuvaj izmjene u arhivu">Sačuvaj izmjene</button>
+    </div>
+  </header>
+
+  <nav class="crumbs" id="crumbs"></nav>
+
+  <main>
+    <table id="tbl">
+      <thead>
+        <tr>
+          <th class="c-check"><input type="checkbox" id="check-all" /></th>
+          <th class="c-name">Ime</th>
+          <th class="c-size">Veličina</th>
+          <th class="c-type">Tip</th>
+        </tr>
+      </thead>
+      <tbody id="rows"></tbody>
+    </table>
+    <div id="empty" class="empty">Nema otvorene arhive. Klikni <b>Otvori</b> ili prevuci fajl u prozor.</div>
+  </main>
+
+  <footer class="status">
+    <span id="status-text">Spreman</span>
+    <span id="engine" class="muted"></span>
+  </footer>
+
+  <!-- Progress overlay -->
+  <div id="overlay" class="overlay hidden">
+    <div class="panel">
+      <div class="p-title" id="p-title">Obrada…</div>
+      <div class="p-name" id="p-name"></div>
+      <div class="bar"><div class="bar-fill" id="bar-fill"></div></div>
+      <div class="p-info"><span id="p-percent">0%</span><span id="p-bytes"></span></div>
+      <button id="btn-cancel" class="danger">Otkaži</button>
+    </div>
+  </div>
+
+  <script src="renderer.js"></script>
+</body>
+</html>
