@@ -227,8 +227,15 @@ async function doExtract(dest, onlyPaths) {
       total: totalBytesOf(onlyPaths)
     });
     hideProgress();
-    if (res.cancelled) setStatus('Otkazano.');
-    else { setStatus(`Raspakovano ${res.extracted} stavki u ${dest}`); api.reveal(dest); }
+    if (res.cancelled) { setStatus('Otkazano.'); return; }
+    if (!res.extracted) {
+      setStatus('Raspakovano 0 stavki.');
+      alert('Ništa nije raspakovano u:\n' + dest +
+            '\n\nProbaj odredište u svom Home folderu i provjeri Postavke → Privatnost i sigurnost → Fajlovi i folderi.');
+      return;
+    }
+    setStatus(`Raspakovano ${res.extracted} stavki u ${dest}`);
+    api.reveal(dest);
   } catch (e) {
     hideProgress();
     setStatus('Greška: ' + e.message);
