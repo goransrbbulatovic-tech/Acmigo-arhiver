@@ -157,6 +157,7 @@ Napi::Value Extract(const Napi::CallbackInfo &info) {
 
   int extracted = 0;
   bool cancelled = false;
+  std::string firstErr;
   struct archive_entry *entry;
   int r;
   while ((r = archive_read_next_header(a, &entry)) == ARCHIVE_OK) {
@@ -177,13 +178,16 @@ Napi::Value Extract(const Napi::CallbackInfo &info) {
     }
 
     r = archive_write_header(ext, entry);
-    if (r == ARCHIVE_OK) {
+    if (r >= ARCHIVE_WARN) {
       if (!archive_entry_size_is_set(entry) || archive_entry_size(entry) > 0) {
         r = copy_data_extract(a, ext, env, p, name.c_str(), cancelled);
         if (cancelled) break;
       }
       archive_write_finish_entry(ext);
       extracted++;
+    } else if (firstErr.empty()) {
+      const char *es = archive_error_string(ext);
+      firstErr = std::string(outPath) + ": " + (es ? es : "ne mogu zapisati na disk");
     }
   }
   bool eof = (r == ARCHIVE_EOF);
@@ -192,6 +196,11 @@ Napi::Value Extract(const Napi::CallbackInfo &info) {
   archive_read_free(a);
   archive_write_close(ext);
   archive_write_free(ext);
+
+  // Ako ništa nije raspakovano zbog greške pri pisanju — prijavi je jasno
+  if (extracted == 0 && !cancelled && !firstErr.empty()) {
+    throw MakeError(env, "Raspakivanje nije uspjelo (dozvole/odredište?):\n" + firstErr);
+  }
 
   Napi::Object res = Napi::Object::New(env);
   res.Set("extracted", Napi::Number::New(env, extracted));
